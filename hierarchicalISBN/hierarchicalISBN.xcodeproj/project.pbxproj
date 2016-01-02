@@ -15,6 +15,7 @@
 		E608CD2A1C36F24E0068BDC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E608CD291C36F24E0068BDC6 /* Assets.xcassets */; };
 		E608CD2D1C36F24E0068BDC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E608CD2B1C36F24E0068BDC6 /* LaunchScreen.storyboard */; };
 		E608CD351C36F95A0068BDC6 /* IntroduceISBN.swift in Sources */ = {isa = PBXBuildFile; fileRef = E608CD341C36F95A0068BDC6 /* IntroduceISBN.swift */; };
+		E6CA7BF41C380052003AF6B5 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6CA7BF31C380052003AF6B5 /* Book.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		E608CD2C1C36F24E0068BDC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E608CD2E1C36F24E0068BDC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E608CD341C36F95A0068BDC6 /* IntroduceISBN.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroduceISBN.swift; sourceTree = "<group>"; };
+		E6CA7BF31C380052003AF6B5 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				E608CD221C36F24E0068BDC6 /* MasterViewController.swift */,
 				E608CD241C36F24E0068BDC6 /* DetailViewController.swift */,
 				E608CD341C36F95A0068BDC6 /* IntroduceISBN.swift */,
+				E6CA7BF31C380052003AF6B5 /* Book.swift */,
 				E608CD261C36F24E0068BDC6 /* Main.storyboard */,
 				E608CD291C36F24E0068BDC6 /* Assets.xcassets */,
 				E608CD2B1C36F24E0068BDC6 /* LaunchScreen.storyboard */,
@@ -146,6 +149,7 @@
 			files = (
 				E608CD351C36F95A0068BDC6 /* IntroduceISBN.swift in Sources */,
 				E608CD211C36F24E0068BDC6 /* hierarchicalISBN.xcdatamodeld in Sources */,
+				E6CA7BF41C380052003AF6B5 /* Book.swift in Sources */,
 				E608CD1E1C36F24E0068BDC6 /* AppDelegate.swift in Sources */,
 				E608CD231C36F24E0068BDC6 /* MasterViewController.swift in Sources */,
 				E608CD251C36F24E0068BDC6 /* DetailViewController.swift in Sources */,

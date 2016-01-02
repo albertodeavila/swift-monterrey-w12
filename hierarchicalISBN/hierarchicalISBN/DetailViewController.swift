@@ -12,32 +12,28 @@ class DetailViewController: UIViewController {
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
 
-
-    var detailItem: AnyObject? {
-        didSet {
-            // Update the view.
-            self.configureView()
-        }
-    }
-
+    @IBOutlet weak var titleLabel: UINavigationItem!
+    @IBOutlet weak var authorsLabel: UILabel!
+    @IBOutlet weak var bookNameLabel: UILabel!
+    @IBOutlet weak var frontImage: UIImageView!
+    var detailItem: Book?
+    
     func configureView() {
-        // Update the user interface for the detail item.
-        if let detail = self.detailItem {
-            if let label = self.detailDescriptionLabel {
-                label.text = detail.valueForKey("timeStamp")!.description
-            }
+        titleLabel.title = detailItem!.name
+        bookNameLabel.text = detailItem!.name
+        authorsLabel.text = detailItem!.authors
+        if(detailItem?.image != nil){
+            frontImage.image = detailItem!.image
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         self.configureView()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 
