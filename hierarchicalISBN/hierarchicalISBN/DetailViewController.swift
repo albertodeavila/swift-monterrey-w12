@@ -18,6 +18,9 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var frontImage: UIImageView!
     var detailItem: Book?
     
+    /**
+     * Method to show the book data
+     */
     func configureView() {
         titleLabel.title = detailItem!.name
         bookNameLabel.text = detailItem!.name

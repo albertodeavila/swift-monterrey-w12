@@ -16,11 +16,11 @@ class MasterViewController: UITableViewController {
     var lastBookAdded: Book? = nil
     var books: [Book] = []
     
+    /**
+     * Method to set the add button
+     */
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
-
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
@@ -29,6 +29,9 @@ class MasterViewController: UITableViewController {
         }
     }
 
+    /**
+     * Call the save book method because this method cath the callback of the introduceISBN controller
+     */
     override func viewWillAppear(animated: Bool) {
         saveBook()
         super.viewWillAppear(animated)
@@ -36,13 +39,15 @@ class MasterViewController: UITableViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func insertNewObject(sender: AnyObject) {
         self.navigationController?.pushViewController(self.storyboard!.instantiateViewControllerWithIdentifier("introduceISBNView") as UIViewController, animated: true)
     }
     
+    /**
+      * Method to save the book and open the view to show its data
+      */
     func saveBook(){
         if(lastBookAdded != nil){
             books.append(lastBookAdded!)
@@ -54,6 +59,9 @@ class MasterViewController: UITableViewController {
         }
     }
 
+    /**
+     * Method to respond to the click in the row
+     */
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let indexPath = self.tableView.indexPathForSelectedRow
         let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
@@ -70,6 +78,9 @@ class MasterViewController: UITableViewController {
         return books.count
     }
     
+    /**
+     * Method to fill the content in the cell
+     */
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("bookCell", forIndexPath: indexPath)
         cell.textLabel?.text = books[indexPath.row].name
