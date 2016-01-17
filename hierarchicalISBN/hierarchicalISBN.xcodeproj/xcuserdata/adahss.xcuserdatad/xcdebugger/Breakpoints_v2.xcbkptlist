@@ -10,12 +10,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "hierarchicalISBN/MasterViewController.swift"
-            timestampString = "473442760.884134"
+            timestampString = "474728952.479139"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "saveBook()"
+            startingLineNumber = "58"
+            endingLineNumber = "58"
+            landmarkName = "showBook()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "hierarchicalISBN/MasterViewController.swift"
+            timestampString = "474729931.122768"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "searchBooks()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

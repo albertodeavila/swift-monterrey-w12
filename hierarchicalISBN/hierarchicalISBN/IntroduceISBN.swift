@@ -1,12 +1,16 @@
 import UIKit
+import CoreData
 
 class IntroduceISBN: UIViewController, UITextFieldDelegate{
 
     
     @IBOutlet weak var isbnTextfield: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
+    var context: NSManagedObjectContext?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         isbnTextfield.returnKeyType = UIReturnKeyType.Search
         isbnTextfield.becomeFirstResponder()
         isbnTextfield.delegate = self
@@ -28,7 +32,7 @@ class IntroduceISBN: UIViewController, UITextFieldDelegate{
     
     /**
      * Function to make a request to openlibrary to search a book by the isbn
-     * given in the isbnTextField and render it in the resultTextView
+     * given in the isbnTextField, save it in a database and render it in the resultTextView
      */
     func searchBookByISBN(){
         errorLabel.hidden = true
@@ -55,17 +59,28 @@ class IntroduceISBN: UIViewController, UITextFieldDelegate{
                     authors = "\(authorName)\n"
                 }
                 let bookName : String = booksMap["title"] as! NSString as String
-                let book: Book = Book(isbn: isbn, name: bookName, authors: authors)
+                let book = NSEntityDescription.insertNewObjectForEntityForName("Book", inManagedObjectContext: self.context!)
+                book.setValue(isbn, forKey: "isbn")
+                book.setValue(bookName, forKey: "name")
+                book.setValue(authors, forKey: "authors")
                 
                 if let bookCovers = booksMap["cover"] as! NSDictionary?{
                     if(bookCovers["medium"] != nil){
                         let url = NSURL(string: bookCovers["medium"] as! NSString as String)
-                        book.imageURL = url
-                        book.image = UIImage(data: NSData(contentsOfURL: url!)!)
+                        book.setValue(bookCovers["medium"] as! NSString as String, forKey: "imageURL")
+                        book.setValue(UIImagePNGRepresentation(UIImage(data: NSData(contentsOfURL: url!)!)!), forKey: "image")
                     }
                 }
+                
+                do{
+                   try self.context!.save()
+                }catch(_){
+                    
+                }
+                
                 let masterViewController = self.navigationController!.viewControllers.first as! MasterViewController
-                masterViewController.lastBookAdded = book
+                
+                masterViewController.lastBookAdded = true
                 self.navigationController?.popViewControllerAnimated(true)
                 
             }else{

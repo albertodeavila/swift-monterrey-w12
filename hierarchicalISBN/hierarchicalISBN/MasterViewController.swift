@@ -2,7 +2,7 @@
 //  MasterViewController.swift
 //  hierarchicalISBN
 //
-//  Created by Alberto De Avila Hernandez on 1/1/16.
+//  Created by Alberto De Avila Hernandez on 15/1/16.
 //  Copyright © 2016 Alberto De Avila Hernandez. All rights reserved.
 //
 
@@ -13,14 +13,15 @@ class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     var managedObjectContext: NSManagedObjectContext? = nil
-    var lastBookAdded: Book? = nil
-    var books: [Book] = []
+    var lastBookAdded: Bool = false
+    var context: NSManagedObjectContext?
     
     /**
      * Method to set the add button
      */
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.context = (UIApplication.sharedApplication().delegate as! AppDelegate).managedObjectContext
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
@@ -33,7 +34,7 @@ class MasterViewController: UITableViewController {
      * Call the save book method because this method cath the callback of the introduceISBN controller
      */
     override func viewWillAppear(animated: Bool) {
-        saveBook()
+        showBook()
         super.viewWillAppear(animated)
     }
 
@@ -46,14 +47,13 @@ class MasterViewController: UITableViewController {
     }
     
     /**
-      * Method to save the book and open the view to show its data
+      * Method open the view to show the data book recently saved
       */
-    func saveBook(){
-        if(lastBookAdded != nil){
-            books.append(lastBookAdded!)
-            lastBookAdded = nil
+    func showBook(){
+        if(lastBookAdded == true){
+            lastBookAdded = false
             self.tableView.reloadData()
-            let rowToSelect: NSIndexPath = NSIndexPath(forRow: books.count-1, inSection: 0)
+            let rowToSelect: NSIndexPath = NSIndexPath(forRow: searchBooks().count-1, inSection: 0)
             self.tableView.selectRowAtIndexPath(rowToSelect, animated: true, scrollPosition: UITableViewScrollPosition.Middle)
             self.performSegueWithIdentifier("showDetail", sender: self);
         }
@@ -65,7 +65,7 @@ class MasterViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let indexPath = self.tableView.indexPathForSelectedRow
         let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
-        controller.detailItem = books[indexPath!.row]
+        controller.detailItem = searchBooks()[indexPath!.row] 
         controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
         controller.navigationItem.leftItemsSupplementBackButton = true
     }
@@ -75,7 +75,7 @@ class MasterViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return books.count
+        return countBooks()
     }
     
     /**
@@ -83,8 +83,33 @@ class MasterViewController: UITableViewController {
      */
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("bookCell", forIndexPath: indexPath)
-        cell.textLabel?.text = books[indexPath.row].name
+        cell.textLabel?.text = searchBooks()[indexPath.row].valueForKey("name") as? String
         return cell
+    }
+    
+    /**
+     * Method to count the number of books
+     */
+    func countBooks()-> Int{
+        return searchBooks().count
+    }
+    
+    /**
+     * Method to search the books in database
+     */
+    func searchBooks() -> [AnyObject]{
+        let niIdea = NSEntityDescription.entityForName("Book", inManagedObjectContext: self.context!)?.managedObjectModel
+        let fetchRequestAllBooks = niIdea!.fetchRequestTemplateForName("allBooks")
+        do{
+            if let allBooks  = try self.context?.executeFetchRequest(fetchRequestAllBooks!){
+                return allBooks
+            }else{
+                return []
+            }
+        }catch(_){
+            return []
+        }
+
     }
 }
 
